@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class Distance {
     private Dice dice;
     private int diceCounter;
@@ -9,8 +11,8 @@ public class Distance {
     public int getDiceCounter() {
         return diceCounter;
     }
-    public void decrement(){
-        diceCounter --;
+    public void decrement(int count){
+        diceCounter -= count;
     }
     public int CalculateDistance(Point pointA,Point pointB){
         if(pointA.getX() == pointB.getX())
@@ -29,4 +31,8 @@ public class Distance {
         int totalDistance = yDistance + xDistance;
         return totalDistance;
     }
+
+   public ArrayList<String> diceResult(){
+        return dice.getDice(diceCounter);
+   }
 }

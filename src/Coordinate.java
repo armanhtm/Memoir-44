@@ -35,4 +35,15 @@ public class Coordinate {
         x ++;
         y --;
     }
+
+    public boolean equals(Object obj) {
+        if(this == obj)
+            return true;
+        if(!(obj instanceof Coordinate))
+            return false;
+        else {
+            Coordinate temp = (Coordinate) obj;
+            return temp.getX() == this.getX() && temp.getY() == this.getY();
+        }
+    }
 }

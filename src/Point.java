@@ -1,7 +1,7 @@
 import java.util.HashMap;
 
 public class Point {
-    private enum Type{
+    enum Type{
         VILLAGE,
         HILL,
         RIVER,
@@ -10,7 +10,6 @@ public class Point {
     }
     private Type type;
     private Troop troop;
-    private HashMap<String,Point> exits;
     Coordinate coordinate;
     public Point(String type,int x,int y){
        coordinate = new Coordinate(x,y);
@@ -23,7 +22,22 @@ public class Point {
     public Troop getTroop() {
         return troop;
     }
-    public void setExits(String direction,Point point){
-        exits.put(direction,point);
+
+    public Coordinate getCoordinate() {
+        return coordinate;
+    }
+
+    public void setCoordinate(Coordinate coordinate) {
+        this.coordinate = coordinate;
+    }
+    public int getX(){
+        return coordinate.getX();
+    }
+    public int getY(){
+        return coordinate.getY();
+    }
+
+    public Type getType() {
+        return type;
     }
 }
