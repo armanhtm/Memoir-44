@@ -2,18 +2,20 @@ import java.util.HashMap;
 
 public class Point {
     enum Type{
+        NORMAL,
         VILLAGE,
         HILL,
         RIVER,
         SHELTER,
-        JUNGLE
+        JUNGLE,
+        BRIDGE
     }
     private Type type;
     private Troop troop;
     Coordinate coordinate;
-    public Point(String type,int x,int y){
+    public Point(Type type,int x,int y){
        coordinate = new Coordinate(x,y);
-       this.type = Type.valueOf(type);
+       this.type = type;
     }
     public void setTroop(Troop troop){
         this.troop = troop;
@@ -39,5 +41,23 @@ public class Point {
 
     public Type getType() {
         return type;
+    }
+    public void print(){
+        if(troop == null || !troop.alive)
+            troop = null;
+        System.out.print("("+ coordinate.getX() + "," + coordinate.getY() + "):");
+        if(troop instanceof Infantry)
+            System.out.print(troop.livesCounter() + troop.getTeam().getName().name() +
+                    "Infantry" + "(" + this.type.name() + ")" + "\t");
+        else
+        if(troop instanceof TankAllied || troop instanceof TankAxis)
+            System.out.print(troop.livesCounter() + troop.getTeam().getName().name() +
+                    "Tank" + "(" + this.type.name() + ")" + "\t");
+        else
+        if(troop instanceof Cannon)
+            System.out.print(troop.livesCounter() + troop.getTeam().getName().name() +
+                    "Cannon" + "(" + this.type.name() + ")" + "\t");
+        else
+            System.out.print("EmptyPlace" + "(" + this.type.name() + ")" + "\t");
     }
 }

@@ -17,4 +17,13 @@ public class Error {
     public void stuck(){
         System.out.println("you are stuck in Jungle ,wait for next round! ");
     }
+    public void indexError(){
+        System.out.println("index out of bound");
+    }
+    public void property(){
+        System.out.println("sorry you can not move a troop which is not yours !!!");
+    }
+    public void coordinateError(){
+        System.out.println("you entered an invalid coordinate! try again");
+    }
 }

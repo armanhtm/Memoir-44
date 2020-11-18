@@ -7,4 +7,9 @@ public class Input {
         String command = input.nextLine();
         return command;
     }
+    public int getInteger(){
+        Scanner input  = new Scanner(System.in);
+        int command = input.nextInt();
+        return command;
+    }
 }

@@ -12,7 +12,7 @@ abstract class Troop {
      Distance distance;
      String[] validMoves = new String[]{"R", "L", "UR", "UL", "DL", "DR"};
      boolean flag;
-    abstract void Move(String movement);
+    abstract void Move(String movement,Board board);
     public int moveCounter(String[] movements){
         int sum = 0, i = 0;
         for(String str : movements) {
@@ -25,9 +25,7 @@ abstract class Troop {
         canAttack = true;
         flag = true;
         boolean flagTroop = false;
-        if(currentPoint.getTroop() instanceof Cannon
-                || currentPoint.getTroop() instanceof TankAllied
-                || currentPoint.getTroop() instanceof TankAxis)
+        if(this instanceof Cannon || this instanceof TankAllied || this instanceof TankAxis)
             flagTroop = true;
         for(String str : movements){
             if(!flag) {
@@ -126,4 +124,6 @@ abstract class Troop {
     public void setTeam(Team team) {
         this.team = team;
     }
+    abstract int livesCounter();
+    abstract String TroopToString();
 }

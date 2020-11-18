@@ -3,18 +3,21 @@ import java.util.ArrayList;
 public class Infantry extends Troop{
     private int unitPerTeam = 4;
     private final int validMove = 2;
-    void Move(String movement) {
+    void Move(String movement,Board board) {
+        board.getPoint(coordinate.getX(),coordinate.getY()).setTroop(null);
         String[] movements = movement.split("\\s");
         while (moveCounter(movements) > validMove || !isValid(movements)) {
             error.moveError();
             movement = input.getInput();
             movements = movement.split("\\s");
         }
-        moveSteps(movements);
+        moveSteps(movements,board);
         if(moveCounter(movements) == 2)
             canAttack = false;
         else
             canAttack = true;
+        board.getPoint(coordinate.getX(),coordinate.getY()).setTroop(this);
+        currentPoint = board.getPoint(coordinate.getX(),coordinate.getY());
     }
 
     void attack(Point point) {
@@ -59,5 +62,12 @@ public class Infantry extends Troop{
         unitPerTeam --;
         if(unitPerTeam == 0)
             die();
+    }
+
+    int livesCounter() {
+        return unitPerTeam;
+    }
+    public String TroopToString(){
+        return "Infantry";
     }
 }

@@ -7,13 +7,14 @@ public class Deck {
     private final int threeCounter = 10;
     private final int fourCounter = 6;
     private final int fiveCounter = 5;
-    private ArrayList<Card> cards;
+    private ArrayList<Card> cards = new ArrayList<>();
+    private ArrayList<Card> usedCards = new ArrayList<>();
     public Deck(){
         cards = new ArrayList<>();
-        setDeck(cards);
+        setDeck();
     }
 
-    public void setDeck(ArrayList<Card> cards) {
+    public void setDeck() {
         for(int i = 0;i < cardCounter; i++){
             if(i < oneCounter){
                 Card card = new Card();
@@ -47,9 +48,16 @@ public class Deck {
         }
     }
     public Card getCard(){
-        return cards.get((int)(Math.random()%40));
+        Card temp = cards.get((int)(Math.random()%cards.size()));
+        cards.remove(temp);
+        usedCards.add(temp);
+        return temp;
     }
-    public void reuseCard(Card card){
-       cards.add(card);
+    public void reuseCard(){
+       cards.addAll(usedCards);
+    }
+    public void cardsCounter(){
+        if(cards.size() == 0)
+            reuseCard();
     }
 }
