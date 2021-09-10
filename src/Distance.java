@@ -1,7 +1,11 @@
 import java.util.ArrayList;
-
+/**
+ * @author Arman Hatami
+ * @version 1.0
+ * Distance class which can calculate distance between 2 points on board
+ */
 public class Distance {
-    private Dice dice;
+    private Dice dice = new Dice();
     private int diceCounter;
 
     public void setDiceCounter(int diceCounter) {
@@ -14,6 +18,13 @@ public class Distance {
     public void decrement(int count){
         diceCounter -= count;
     }
+
+    /**
+     * finding shortest path between 2 points and calculate the distance
+     * @param pointA
+     * @param pointB
+     * @return distance
+     */
     public int CalculateDistance(Point pointA,Point pointB){
         if(pointA.getX() == pointB.getX())
             return (pointA.getY() - pointB.getY()) / 2;

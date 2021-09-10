@@ -1,3 +1,8 @@
+/**
+ * @author Arman Hatami
+ * @version 1.0
+ * class player which stores player's score , team and info
+ */
 public class Player {
     private Team team;
     private String name;

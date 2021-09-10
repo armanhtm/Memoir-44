@@ -1,32 +1,46 @@
 import java.util.ArrayList;
-
+/**
+ * @author Arman Hatami
+ * @version 1.0
+ * Axis tank troop
+ */
 public class TankAxis extends Troop{
     private int unitPerTeam = 4;
     private final int validMove = 4;
+    /**
+     * move method to change location through the board
+     * @param movement
+     * @param board
+     */
     void Move(String movement,Board board) {
         board.getPoint(coordinate.getX(),coordinate.getY()).setTroop(null);
         String[] movements = movement.split("\\s");
-        while (moveCounter(movements) > validMove || !isValid(movements)) {
+        while (moveCounter(movements) > validMove) {
             error.moveError();
             movement = input.getInput();
             movements = movement.split("\\s");
         }
-        moveSteps(movements,board);
         canAttack = true;
+        moveSteps(movements,board);
         board.getPoint(coordinate.getX(),coordinate.getY()).setTroop(this);
         currentPoint = board.getPoint(coordinate.getX(),coordinate.getY());
     }
 
-    void attack(Point point) {
+    /**
+     * attack method to hit the targets
+     * @param point
+     * @return boolean(true when target is destroyed)
+     */
+    boolean attack(Point point) {
         int pointsBetween = distance.CalculateDistance(this.currentPoint,point);
         if(pointsBetween > 3) {
             error.farError();
-            return;
+            return false;
         }
         distance.setDiceCounter(3);
         if(!canAttack){
             error.attackError();
-            return;
+            return false;
         }
         else{
             switch (point.getType()) {
@@ -38,26 +52,42 @@ public class TankAxis extends Troop{
                     break;
             }
         }
-        distance.decrement(2);
         ArrayList<String> result = distance.diceResult();
-        if(result.contains("5"))
+        if(result.contains("5")) {
             point.getTroop().kill();
+            if (point.getTroop().livesCounter() == 0)
+                return true;
+        }
         else {
             if (result.contains("1") || result.contains("6")) {
-                if (point.getTroop() instanceof Infantry)
+                if (point.getTroop() instanceof Infantry) {
                     point.getTroop().kill();
+                    if (point.getTroop().livesCounter() == 0)
+                        return true;
+                }
             } else if (result.contains("2")) {
-                if (point.getTroop() instanceof TankAllied)
+                if (point.getTroop() instanceof TankAllied) {
                     point.getTroop().kill();
+                    if (point.getTroop().livesCounter() == 0)
+                        return true;
+                }
             }
             else
                 error.badLuck();
         }
+        return false;
     }
+    /**
+     * set alive equals to false after troop is destroyed
+     */
     public void die() {
         alive = false;
+        this.team.getTroops().remove(this);
     }
 
+    /**
+     * decrease the blood of troop when it is hit
+     */
     public void kill() {
         unitPerTeam --;
         if(unitPerTeam == 0)
@@ -66,7 +96,18 @@ public class TankAxis extends Troop{
     int livesCounter() {
         return unitPerTeam;
     }
+    /**
+     * return info of troop as a string
+     * @return string of info
+     */
     public String TroopToString(){
+        return "Tank" + "(" + this.coordinate.getX() +"," + this.coordinate.getY() + ")";
+    }
+    /**
+     * just return the name of troop
+     * @return string
+     */
+    public String toString(){
         return "Tank";
     }
 }

@@ -1,6 +1,10 @@
 import java.awt.*;
 import java.util.Scanner;
-
+/**
+ * @author Arman Hatami
+ * @version 1.0
+ * card class which can store type of cards
+ */
 public class Card {
     private Input input;
     private Error error;
@@ -12,9 +16,12 @@ public class Card {
         ORDER4,
         ORDER5
     }
-    public void setCard(String cardName) {
-        this.card = Type.valueOf(cardName);
+    public void setCard(Type cardName) {
+        this.card = cardName;
     }
+    /**
+     * convert cards name to readable strings
+     */
     public String CardToString(){
         switch(card){
             case ORDER5:

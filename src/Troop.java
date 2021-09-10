@@ -1,26 +1,42 @@
 import java.util.ArrayList;
 import java.util.Arrays;
 
+/**
+ * @author Arman Hatami
+ * @version 1.0
+ * class of troop which is abstract and we will save common adjectives and methods of different troop here
+ */
+
 abstract class Troop {
      Team team;
-     Input input;
-     Error error;
-     boolean canAttack;
+     Input input = new Input();
+     Error error = new Error();
+     boolean canAttack = true;
      boolean alive = true;
-     Coordinate coordinate;
+     Coordinate coordinate = new Coordinate();
      Point currentPoint;
-     Distance distance;
+     Distance distance = new Distance();
      String[] validMoves = new String[]{"R", "L", "UR", "UL", "DL", "DR"};
      boolean flag;
     abstract void Move(String movement,Board board);
+
+    /**
+     * counts the number moves
+     * @param movements
+     * @return
+     */
     public int moveCounter(String[] movements){
-        int sum = 0, i = 0;
-        for(String str : movements) {
-            sum += str.charAt(i);
-            i++;
-        }
+        int sum = 0;
+        for(String str : movements)
+            sum += Integer.parseInt(String.valueOf(str.charAt(0)));
         return sum;
     }
+
+    /**
+     * do the movements step by step
+     * @param movements
+     * @param board
+     */
     public void moveSteps(String[] movements,Board board){
         canAttack = true;
         flag = true;
@@ -94,18 +110,10 @@ abstract class Troop {
             }
         }
     }
-    public boolean isValid(String[] movements){
-        for(String str : movements)
-            if(!Arrays.asList(validMoves).contains(str.charAt(1)) &&
-                    !Arrays.asList(validMoves).contains(str.charAt(1) + str.charAt(2)))
-                return false;
-         return true;
-    }
-
     public boolean isCanAttack() {
         return canAttack;
     }
-    abstract void attack(Point point);
+    abstract boolean attack(Point point);
 
     public Coordinate getCoordinate() {
         return coordinate;
@@ -126,4 +134,13 @@ abstract class Troop {
     }
     abstract int livesCounter();
     abstract String TroopToString();
+
+    public void setCoordinate(int x, int y){
+        this.coordinate.setX(x);
+        this.coordinate.setY(y);
+    }
+
+    public void setCurrentPoint(Point currentPoint) {
+        this.currentPoint = currentPoint;
+    }
 }

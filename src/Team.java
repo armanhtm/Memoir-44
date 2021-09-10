@@ -1,14 +1,17 @@
 import java.util.ArrayList;
 import java.util.HashSet;
-
+/**
+ * @author Arman Hatami
+ * @version 1.0
+ * team class which stores team name , used cards , current cards and troops of player
+ */
 public class Team {
-    Input input;
-    Error error;
+    Input input = new Input();
+    Error error = new Error();
     private teamName name;
     private ArrayList<Card> cards = new ArrayList<>();
     private ArrayList<Troop> troops = new ArrayList<>();
     private ArrayList<Troop> troopsInsertion = new ArrayList<>();
-    private HashSet<Troop> selectedTroops = new HashSet<>();
     public Team(teamName name,Deck deck){
         this.name = name;
         setTroops();
@@ -25,32 +28,45 @@ public class Team {
         return troops;
     }
 
+    /**
+     * add troops of each team
+     */
     public void setTroops() {
        if(name == teamName.ALLIED){
            for(int i = 0;i < 3; i++) {
-               troops.add(new TankAllied());
-               troopsInsertion.add(new TankAllied());
+               TankAllied temp = new TankAllied();
+               troops.add(temp);
+               troopsInsertion.add(temp);
            }
-           for(int i = 0;i < 8; i++) {
-               troops.add(new Infantry());
-               troopsInsertion.add(new Infantry());
+           for(int i = 0;i < 9; i++) {
+               Infantry temp = new Infantry();
+               troops.add(temp);
+               troopsInsertion.add(temp);
            }
            for(int i = 0;i < 2; i++) {
-               troops.add(new Cannon());
-               troopsInsertion.add(new Cannon());
+               Cannon temp = new Cannon();
+               troops.add(temp);
+               troopsInsertion.add(temp);
            }
        }
        else {
            for(int i = 0;i < 6; i++) {
-               troops.add(new TankAxis());
-               troopsInsertion.add(new TankAxis());
+               TankAxis temp = new TankAxis();
+               troops.add(temp);
+               troopsInsertion.add(temp);
            }
            for(int i = 0;i < 7; i++) {
-               troops.add(new Infantry());
-               troopsInsertion.add(new Infantry());
+               Infantry temp = new Infantry();
+               troops.add(temp);
+               troopsInsertion.add(temp);
            }
        }
     }
+
+    /**
+     * add each team card
+     * @param deck
+     */
     public void setCards(Deck deck){
         if(name == teamName.ALLIED)
             for(int i = 0; i < 4 ; i++)
@@ -61,7 +77,7 @@ public class Team {
     }
     public void printTroops(){
         for(int i = 0 ;i < troopsInsertion.size(); i++)
-            System.out.println((i + 1) + "." + troopsInsertion.get(i).TroopToString());
+            System.out.println((i + 1) + "." + troopsInsertion.get(i).toString());
     }
 
     public ArrayList<Troop> getTroopsInsertion() {
@@ -69,35 +85,63 @@ public class Team {
     }
     public void printCards(){
         for(int i = 0 ; i < cards.size();i++)
-            System.out.println((i + 1) + cards.get(i).CardToString());
+            System.out.println((i + 1) + "." + cards.get(i).CardToString());
     }
-    public int getCardType(){
-        String card = input.getInput();
-        while(!contains(card)){
+
+    /**
+     * choose a card between player cards
+     * @param deck
+     * @return number of troops you can use
+     */
+    public int getCardType(Deck deck){
+        int card = input.getInteger();
+        int result =0;
+        while(card > cards.size()){
             error.cardError();
-            card = input.getInput();
+            card = input.getInteger();
         }
-        switch (Card.Type.valueOf(card)){
-            case ORDER1:
-                return 1;
-            case ORDER2:
-                return 2;
-            case ORDER3:
-                return 3;
-            case ORDER4:
-                return 4;
-            case ORDER5:
-                return 5;
+        switch (cards.get(card - 1).CardToString()){
+            case "order 1 unit":
+                 result = 1;
+                 break;
+            case "order 2 units":
+                result = 2;
+                break;
+            case "order 3 units":
+                result = 3;
+                break;
+            case "order 4 units":
+                result = 4;
+                break;
+            case "order 3 units from 1 type":
+                result = 5;
+                break;
         }
-        return 0;
-    }
-    public boolean contains(String test) {
-        for (Card.Type type : Card.Type.values())
-            if (type.name().equals(test))
-                return true;
-        return false;
+        deck.getUsedCards().add(cards.get(card - 1));
+        cards.remove(card - 1);
+        cards.add(deck.getCard());
+        return result;
     }
     public void addToSelect(Troop troop){
-        selectedTroops.add(troop);
+        troopsInsertion.add(troop);
+    }
+
+    /**
+     * return each team nickname
+     * @return string
+     */
+    public String getBriefName(){
+        if(name == teamName.ALLIED)
+            return "AL";
+        else
+            return "AX";
+    }
+
+    /**
+     * print alive troops of each team
+     */
+    public void troops(){
+        for(int i = 0 ;i < troops.size(); i++)
+            System.out.println((i + 1) + "." + troops.get(i).TroopToString());
     }
 }

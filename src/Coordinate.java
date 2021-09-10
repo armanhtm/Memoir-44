@@ -1,8 +1,17 @@
+/**
+ * @author Arman Hatami
+ * @version 1.0
+ * coordinate class to modify movements and store x and y of location
+ */
 public class Coordinate {
     private int x;
     private int y;
-    public Coordinate(int x, int y){
+
+    public void setX(int x) {
         this.x = x;
+    }
+
+    public void setY(int y) {
         this.y = y;
     }
 

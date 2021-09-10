@@ -1,5 +1,9 @@
 import java.util.ArrayList;
-
+/**
+ * @author Arman Hatami
+ * @version 1.0
+ * the main board game which we set troops on it
+ */
 public class Board {
     Error error;
     Point[][]points = new Point[9][25];
@@ -9,6 +13,10 @@ public class Board {
     public Point[][] getPoints() {
         return points;
     }
+
+    /**
+     * reset the board for start a new match
+     */
     public void resetBoard(){
         for(int i = 0; i < 9; i++)
             for(int j = 0; j < 25; j++ )
@@ -17,8 +25,8 @@ public class Board {
         points[0][0] = new Point(Point.Type.HILL,0,0);
         points[4][22] = new Point(Point.Type.HILL,4,22);
         points[5][21] = new Point(Point.Type.HILL,5,21);
-        points[2][12] = new Point(Point.Type.HILL,0,0);
-        points[1][13] = new Point(Point.Type.HILL,0,0);
+        points[2][12] = new Point(Point.Type.HILL,2,12);
+        points[1][13] = new Point(Point.Type.HILL,1,13);
         points[5][9] = new Point(Point.Type.HILL,5,9);
         points[4][10] = new Point(Point.Type.HILL,4,10);
         points[1][9] = new Point(Point.Type.SHELTER,1,9);
@@ -49,7 +57,8 @@ public class Board {
         points[2][0] = new Point(Point.Type.VILLAGE,2,0);
         points[3][1] = new Point(Point.Type.BRIDGE,3,1);
         points[0][8] = new Point(Point.Type.BRIDGE,0,8);
-    }public Point getPoint(int x, int y)
+    }
+    public Point getPoint(int x, int y)
     {
         if (x < 0 || x > 8 || y < 0 || y > 24) {
             error.indexError();

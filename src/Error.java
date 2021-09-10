@@ -1,3 +1,8 @@
+/**
+ * @author Arman Hatami
+ * @version 1.0
+ * error class which stores all errors that can happen in the game so we can have access to them easily
+ */
 public class Error {
     public void cardError(){
         System.out.println("invalid card name!!! try again");
@@ -25,5 +30,11 @@ public class Error {
     }
     public void coordinateError(){
         System.out.println("you entered an invalid coordinate! try again");
+    }
+    public void EmptyAttack(){
+        System.out.println("target is empty!");
+    }
+    public void repetitive(){
+        System.out.println("you can not choose from other types !");
     }
 }
